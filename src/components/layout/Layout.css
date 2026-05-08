@@ -1,77 +1,56 @@
-/* Layout Styles */
-
-.layout {
+/* Core Layout Wrapper */
+.layout-wrapper {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f8f9fa;
-  margin-top: 80px;
 }
 
+/* Push content down so it doesn't hide behind fixed header */
 .layout-body {
   display: flex;
   flex: 1;
-  gap: 1rem;
+  margin-top: 80px; 
 }
 
 .main-content {
   flex: 1;
-  margin-left: 280px;
-  padding: 2rem;
-  min-height: calc(100vh - 80px - 200px);
-  animation: fadeIn 0.3s ease-in-out;
-  transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background-color: #f8fafc;
+  width: 100%;
+  display: block; /* Important: ensures children don't stretch accidentally */
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* --- DYNAMIC MARGIN LOGIC --- */
+
+/* 1. When Sidebar is Expanded */
+.sidebar-expanded .main-content,
+.sidebar-expanded .footer {
+  margin-left: 260px;
 }
 
-/* Handle sidebar collapse/expand */
-.layout-body.sidebar-collapsed .main-content {
+/* 2. When Sidebar is Collapsed */
+.sidebar-collapsed .main-content,
+.sidebar-collapsed .footer {
   margin-left: 80px;
 }
 
-.layout.sidebar-collapsed .footer {
-  margin-left: 80px;
+/* 3. When No Sidebar (Logged Out / Citizen View) */
+.no-sidebar .main-content,
+.no-sidebar .footer {
+  margin-left: 0 !important;
 }
 
-/* Mobile Styles */
+/* Content Padding */
+.content-inner {
+  width: 100%;
+}
+
+/* Responsive Fix for Mobile */
 @media (max-width: 768px) {
-  .layout-body {
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .main-content {
-    margin-left: 0;
-    margin-top: 80px;
-    padding: 1.5rem 1rem;
-    min-height: auto;
-  }
-}
-
-@media (max-width: 480px) {
-  .main-content {
-    padding: 1rem 0.75rem;
-  }
-}
-
-/* Print Styles */
-@media print {
-  .layout {
-    background: white;
-  }
-
-  .main-content {
-    margin-left: 0;
-    padding: 0;
+  .sidebar-expanded .main-content,
+  .sidebar-expanded .footer,
+  .sidebar-collapsed .main-content,
+  .sidebar-collapsed .footer {
+    margin-left: 0 !important;
   }
 }

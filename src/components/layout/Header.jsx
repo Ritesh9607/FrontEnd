@@ -1,45 +1,64 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, LogOut } from 'lucide-react';
+import { BarChart3, LogIn, ArrowLeft } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Header.css';
 
-export const Header = () => {
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location.href = '/';
-  };
+export const Header = ({ isAuthenticated }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/" || location.pathname === "/home";
 
   return (
-    <motion.header
+    <motion.header 
       className="header"
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.4 }}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
     >
       <div className="header-container">
         <div className="header-brand">
-          <motion.div
-            className="header-logo"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
+          {isAuthenticated && !isHome && (
+            <button className="btn-header-back" onClick={() => navigate(-1)}>
+              <ArrowLeft size={18} />
+            </button>
+          )}
+          <div className="header-logo" onClick={() => navigate('/')}>
             <BarChart3 size={32} />
-          </motion.div>
+          </div>
           <div className="brand-text">
             <h1>FinanceGov</h1>
-            <p>Officer name example "Program manager"</p>
+            <p>{isAuthenticated ? "Administrative Portal" : "National Financial Regulation"}</p>
           </div>
         </div>
 
         <div className="header-info">
-          <button className="logout-btn" onClick={handleLogout}>
-            <LogOut size={18} />
-            <span>Logout</span>
-          </button>
+          {/* Updated Login Button */}
+{!isAuthenticated ? (
+  <button 
+    className="login-btn fw-bold" 
+    onClick={() => navigate('/login')}
+    style={{ 
+      backgroundColor: '#facc15', 
+      color: '#000', 
+      border: 'none',
+      padding: '0.5rem 1.5rem',
+      borderRadius: '6px',
+      display: 'flex',
+      alignitems: 'center',
+      gap: '8px'
+    }}
+  >
+    <LogIn size={20} />
+    <span>Login</span>
+  </button>
+) : (
+  <div className="admin-status-pill">
+    <div className="status-dot"></div>
+    <span>Admin Active</span>
+  </div>
+)}
         </div>
       </div>
     </motion.header>
   );
 };
-
-export default Header;

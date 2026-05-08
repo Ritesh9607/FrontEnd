@@ -1,0 +1,50 @@
+/* Restores the View Programs button size and color */
+.hero-section .btn-primary, 
+.btn-primary.btn-lg {
+  background-color: #1e4d8b !important;
+  border-color: #1e4d8b !important;
+  width: auto !important;
+  min-width: 200px;
+  max-width: fit-content;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.hero-section .btn-primary:hover {
+  background-color: #143859 !important;
+  transform: translateY(-2px);
+}
+
+/* Stat Tab Hover Effects */
+.stat-card {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.stat-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Vertical Cards Styling */
+.card {
+  transition: all 0.3s ease;
+  border-bottom: 4px solid #fcbf49 !important;
+  background-color: #fff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
+}
+
+.btn-warning {
+  background: linear-gradient(90deg, #f9a825, #fbc02d);
+  border: none;
+}
+
+.text-primary {
+  color: #1e4d8b !important;
+}
