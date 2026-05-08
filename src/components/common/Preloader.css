@@ -1,0 +1,40 @@
+.preloader-overlay {
+  position: fixed;
+  inset: 0;
+  /* Using the Header's Brand Blue background */
+  background-color: #1a56ad; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.brand-name {
+  font-size: 5rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -1px;
+}
+
+/* Specific text colors */
+.text-white {
+  color: #ffffff;
+}
+
+.text-yellow {
+  color: #facc15; /* Professional yellow/gold */
+}
+
+.tagline {
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0.9;
+  margin: 0;
+}
+
+.preloader-content {
+  text-align: center;
+}

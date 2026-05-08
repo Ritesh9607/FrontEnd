@@ -1,0 +1,54 @@
+/* Custom styling for red-themed toast like dashboard errors */
+.Toastify__toast--error {
+  background-color: #ffffff !important;
+  color: #333333 !important;
+  border-left: 6px solid #e74c3c !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  border-radius: 8px !important;
+}
+
+.Toastify__progress-bar--error {
+  background: #e74c3c !important;
+}
+
+/* Stat Tab Hover Effects */
+.stat-card {
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.stat-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+  border-start-color: #143859 !important;
+}
+
+/* Vertical Cards Styling */
+.card {
+  transition: all 0.3s ease;
+  border-bottom: 4px solid #fcbf49 !important;
+  background-color: #fff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
+}
+
+.btn-warning {
+  background: linear-gradient(90deg, #f9a825, #fbc02d);
+  border: none;
+}
+
+.text-primary {
+  color: #1e4d8b !important;
+}
+
+.program-main-img {
+  border: 1px solid #eee;
+  display: inline-block;
+}
+
+.min-vh-75 {
+  min-height: 75vh;
+}

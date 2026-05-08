@@ -1,20 +1,41 @@
-import React from 'react';
-import { Header } from './Header';
-import { Footer } from './Footer';
-import './Layout.css';
+import React from "react";
+import { Outlet } from "react-router-dom";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
+import Sidebar from "./Sidebar";  // ✅ corrected import (no {} if default export)
+import "./Layout.css";
 
-export const Layout = ({ children }) => {
+const Layout = () => {
+
+  // ✅ Check authentication
+  const isAuthenticated = !!localStorage.getItem("token");
+
   return (
-    <div className="layout">
-      <Header />
+    <div className={`layout ${!isAuthenticated ? "no-sidebar" : ""}`}>
 
+      {/* ✅ HEADER */}
+      <Header isAuthenticated={isAuthenticated} />
+
+      {/* ✅ BODY */}
       <div className="layout-body">
-        <main className="main-content">
-          {children}
+
+        {/* ✅ SIDEBAR ONLY IF LOGGED IN */}
+        {isAuthenticated && <Sidebar />}
+
+        {/* ✅ MAIN CONTENT */}
+        <main
+          className={`main-content ${
+            !isAuthenticated ? "full-width" : ""
+          }`}
+        >
+          <Outlet />
         </main>
+
       </div>
 
+      {/* ✅ FOOTER */}
       <Footer />
+
     </div>
   );
 };

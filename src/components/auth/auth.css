@@ -1,0 +1,28 @@
+.auth-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f4f7f9; /* Soft background to contrast the card */
+}
+
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: white;
+  border-radius: 12px;
+  border-top: 5px solid #143859; /* Matching FinanceGov Blue */
+}
+
+.text-primary {
+  color: #143859 !important;
+}
+
+.btn-primary {
+  background-color: #143859;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #0d263d;
+}

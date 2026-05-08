@@ -1,0 +1,81 @@
+/* --- SIDEBAR CORE --- */
+.admin-sidebar {
+  height: 100vh;
+  background-color: #0f172a; 
+  color: white;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 1100;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-sidebar.open { width: 260px; }
+.admin-sidebar.collapsed { width: 75px; }
+
+.sidebar-top {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  height: 70px;
+}
+
+.toggle-btn {
+  background: none; border: none; color: #94a3b8;
+  cursor: pointer; padding: 8px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+
+.toggle-btn:hover { background: rgba(255, 255, 255, 0.1); color: white; }
+
+.brand-name {
+  font-weight: 800; color: #facc15; letter-spacing: 1px;
+  font-size: 1rem; white-space: nowrap;
+}
+
+.nav-item {
+  display: flex; align-items: center; padding: 15px 25px;
+  color: #94a3b8; text-decoration: none; transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.nav-item:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+
+.nav-item.active {
+  background: rgba(250, 204, 21, 0.1);
+  color: #facc15; border-right: 4px solid #facc15;
+}
+
+.icon-wrapper { min-width: 30px; display: flex; align-items: center; }
+
+/* --- LAYOUT PUSH LOGIC (Moved from App.css to here) --- */
+.app-container {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.main-content-wrapper {
+  flex-grow: 1;
+  width: 100%;
+  transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Logic to shift the screen based on the sidebar class in App.jsx */
+.sidebar-open .main-content-wrapper { 
+  padding-left: 260px; 
+}
+
+.sidebar-closed .main-content-wrapper { 
+  padding-left: 75px; 
+}
+
+.sidebar-footer {
+  padding: 20px; text-align: center; opacity: 0.4;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
