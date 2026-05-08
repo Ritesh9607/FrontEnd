@@ -3,54 +3,65 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* Push content down so it doesn't hide behind fixed header */
 .layout-body {
   display: flex;
   flex: 1;
-  margin-top: 80px; 
+  margin-top: 80px; /* Space for fixed header */
 }
 
 .main-content {
   flex: 1;
-  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background-color: #f8fafc;
-  width: 100%;
-  display: block; /* Important: ensures children don't stretch accidentally */
+  display: flex;
+  flex-direction: column;
 }
 
-/* --- DYNAMIC MARGIN LOGIC --- */
+/* THE GEMINI CENTERING */
+.content-inner {
+  width: 100%;
+  max-width: 1200px; 
+  margin: 0 auto;    
+  padding: 40px 20px;
+  flex: 1;
+}
 
-/* 1. When Sidebar is Expanded */
+/* DYNAMIC MARGINS & WIDTHS */
+/* Expanded */
 .sidebar-expanded .main-content,
 .sidebar-expanded .footer {
-  margin-left: 260px;
+  margin-left: 260px !important;
+  width: calc(100% - 260px) !important;
 }
 
-/* 2. When Sidebar is Collapsed */
+/* Collapsed */
 .sidebar-collapsed .main-content,
 .sidebar-collapsed .footer {
-  margin-left: 80px;
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
 }
 
-/* 3. When No Sidebar (Logged Out / Citizen View) */
+/* No Sidebar (Citizen/Landing) */
 .no-sidebar .main-content,
 .no-sidebar .footer {
   margin-left: 0 !important;
+  width: 100% !important;
 }
 
-/* Content Padding */
-.content-inner {
-  width: 100%;
+/* Smooth Footer Animation */
+.footer {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-/* Responsive Fix for Mobile */
+/* Mobile Fix */
 @media (max-width: 768px) {
   .sidebar-expanded .main-content,
-  .sidebar-expanded .footer,
   .sidebar-collapsed .main-content,
-  .sidebar-collapsed .footer {
+  .footer {
     margin-left: 0 !important;
+    width: 100% !important;
   }
 }

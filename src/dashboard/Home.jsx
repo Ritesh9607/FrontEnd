@@ -65,11 +65,12 @@ export const Home = () => {
   <button 
     className="btn btn-warning btn-lg px-4 w-auto d-inline-flex align-items-center fw-bold" 
     onClick={handleViewPrograms}
+    /* Note: We removed the hardcoded background and shadow here 
+       so the hover effects in Home.css can work! 
+    */
     style={{ 
-      backgroundColor: '#facc15', 
-      borderColor: '#facc15', 
       color: '#000',
-      boxShadow: '0 4px 6px rgba(0,0,0,0.1)' 
+      borderRadius: '8px' 
     }}
   >
     View Programs <ArrowRight size={20} className="ms-2" />

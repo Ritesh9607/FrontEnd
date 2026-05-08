@@ -2,18 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, MapPin, Phone, Mail } from 'lucide-react';
 import './Footer.css';
-
+ 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-IN'));
-
+ 
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString('en-IN'));
     }, 1000);
     return () => clearInterval(timer);
   }, []);
-
+ 
   return (
     <motion.footer
       className="footer"
@@ -37,7 +37,7 @@ export const Footer = () => {
             <span>FinanceGov@government.in</span>
           </div>
         </div>
-
+ 
         <div className="footer-section">
           <h6>Quick Links</h6>
           <ul>
@@ -47,7 +47,7 @@ export const Footer = () => {
             <li><a href="#contact">Contact Us</a></li>
           </ul>
         </div>
-
+ 
         <div className="footer-section">
           <h6>Resources</h6>
           <ul>
@@ -57,7 +57,7 @@ export const Footer = () => {
             <li><a href="#support">Support</a></li>
           </ul>
         </div>
-
+ 
         <div className="footer-section">
           <h6>Current Time</h6>
           <div className="footer-item">
@@ -65,7 +65,7 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-
+ 
       <div className="footer-bottom">
         <div className="footer-divider"></div>
         <div className="footer-copyright">
@@ -76,5 +76,5 @@ export const Footer = () => {
     </motion.footer>
   );
 };
-
+ 
 export default Footer;

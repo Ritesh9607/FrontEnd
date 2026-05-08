@@ -14,7 +14,6 @@ import Preloader from "./components/common/Preloader";
 import Layout from "./components/layout/Layout";
 import Home from "./dashboard/home";
 import AdminHome from "./dashboard/AdminHome";
-import AdminSidebar from "./components/layout/AdminSidebar";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 
@@ -31,7 +30,9 @@ const PageChangeLoader = ({ setProgress }) => {
 function App() {
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // ✅ Controls the collapse
+
+  // Use a proper check for token
+  const isAuthenticated = !!localStorage.getItem("token");
 
   if (loading) {
     return <Preloader onFinish={() => setLoading(false)} />;
@@ -41,31 +42,26 @@ function App() {
     <Router>
       <LoadingBar color="#facc15" progress={progress} onLoaderFinished={() => setProgress(0)} height={3} shadow={true} />
       <PageChangeLoader setProgress={setProgress} />
-
+      
       <Routes>
-        {/* AUTH ROUTES */}
+        {/* AUTH ROUTES (No Layout) */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* ✅ ADMIN ROUTES WITH COLLAPSIBLE PUSH LOGIC */}
-        <Route path="/admin/dashboard" element={
-          <div className={`app-container ${isSidebarOpen ? "sidebar-open" : "sidebar-closed"}`}>
-            <AdminSidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
-            <main className="main-content-wrapper">
-              {/* ✅ Passing isAuthenticated={true} fixes the Logout button */}
-              <Layout isAuthenticated={true}>
-                <AdminHome />
-              </Layout>
-            </main>
-          </div>
-        } />
+        {/* ADMIN ROUTES (Using Layout's internal Sidebar logic) */}
+        <Route path="/admin" element={<Layout />}>
+           <Route path="dashboard" element={<AdminHome />} />
+           {/* Add other admin sub-routes here */}
+        </Route>
 
         {/* CITIZEN ROUTES */}
-        <Route element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="home" element={<Home />} />
         </Route>
+
+        {/* FALLBACK */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 
       <ToastContainer position="top-right" autoClose={3000} theme="colored" />

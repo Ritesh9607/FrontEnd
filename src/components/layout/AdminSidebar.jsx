@@ -1,19 +1,9 @@
 import React from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { 
-  Menu, 
-  LayoutDashboard, 
-  UserPlus, 
-  Users, 
-  ClipboardList, 
-  LogOut,
-  ShieldCheck 
-} from 'lucide-react';
+import { NavLink } from 'react-router-dom';
+import { LayoutDashboard, UserPlus, Users, ClipboardList, Menu, ChevronLeft } from 'lucide-react';
 import './AdminSidebar.css';
 
 const AdminSidebar = ({ isOpen, toggleSidebar }) => {
-  const navigate = useNavigate();
-
   const menuItems = [
     { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/admin/dashboard' },
     { name: 'Create Officer', icon: <UserPlus size={20} />, path: '/admin/create-officer' },
@@ -21,16 +11,13 @@ const AdminSidebar = ({ isOpen, toggleSidebar }) => {
     { name: 'Audit Logs', icon: <ClipboardList size={20} />, path: '/admin/audit-logs' },
   ];
 
-  const handleLogout = () => {
-    // Add your logout logic here (clear tokens, etc.)
-    navigate('/login');
-  };
-
   return (
-    <aside className={`sidebar ${isOpen ? 'expanded' : 'collapsed'}`}>
-      <button className="sidebar-toggle" onClick={toggleSidebar}>
-        <Menu size={22} />
-      </button>
+    <aside className={`sidebar ${isOpen ? 'expanded' : 'collapsed'}`} style={{ zIndex: 1000 }}>
+      <div className="sidebar-header">
+        <button className="sidebar-toggle" onClick={toggleSidebar}>
+          {isOpen ? <ChevronLeft size={22} /> : <Menu size={22} />}
+        </button>
+      </div>
 
       <nav className="sidebar-nav">
         {menuItems.map((item) => (
@@ -44,27 +31,6 @@ const AdminSidebar = ({ isOpen, toggleSidebar }) => {
           </NavLink>
         ))}
       </nav>
-
-      <div className="sidebar-footer">
-        <div className="admin-session-card">
-          {isOpen ? (
-            <>
-              <div className="session-info">
-                <ShieldCheck size={16} className="text-yellow" />
-                <span className="session-text">Admin Active</span>
-              </div>
-              <button className="logout-btn-sidebar" onClick={handleLogout}>
-                <LogOut size={18} />
-                <span>Logout</span>
-              </button>
-            </>
-          ) : (
-            <button className="logout-icon-only" onClick={handleLogout}>
-              <LogOut size={20} />
-            </button>
-          )}
-        </div>
-      </div>
     </aside>
   );
 };

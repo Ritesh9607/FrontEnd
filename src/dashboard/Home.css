@@ -1,50 +1,77 @@
-/* Restores the View Programs button size and color */
-.hero-section .btn-primary, 
-.btn-primary.btn-lg {
-  background-color: #1e4d8b !important;
-  border-color: #1e4d8b !important;
+/* --- PRIMARY BUTTONS (View Programs & Login) --- */
+.hero-section .btn-warning, 
+.btn-warning.btn-lg,
+.login-btn {
+  background-color: #facc15 !important;
+  color: #000000 !important;
+  border: none !important;
+  font-weight: 700 !important;
   width: auto !important;
   min-width: 200px;
   max-width: fit-content;
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  padding: 12px 30px !important;
+  border-radius: 8px !important;
+  /* Smooth transition for the lift and shadow */
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
 }
 
-.hero-section .btn-primary:hover {
-  background-color: #143859 !important;
-  transform: translateY(-2px);
+/* Hover Effect: Lifts up and adds a themed glow */
+.hero-section .btn-warning:hover, 
+.btn-warning.btn-lg:hover,
+.login-btn:hover {
+  background-color: #f7d51d !important; /* Brighter yellow */
+  transform: translateY(-4px) scale(1.02); /* Lift effect */
+  box-shadow: 0 10px 20px rgba(250, 204, 21, 0.4) !important; /* Yellow glow */
+  color: #000000 !important;
 }
 
-/* Stat Tab Hover Effects */
+/* Active Click Effect */
+.hero-section .btn-warning:active,
+.login-btn:active {
+  transform: translateY(-1px);
+}
+
+/* --- STAT CARDS --- */
 .stat-card {
   cursor: pointer;
+  background-color: #fff;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .stat-card:hover {
   transform: scale(1.05);
   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1) !important;
+  border-start-color: #1e4d8b !important;
 }
 
-/* Vertical Cards Styling */
+/* --- VERTICAL PROGRAM CARDS --- */
 .card {
   transition: all 0.3s ease;
-  border-bottom: 4px solid #fcbf49 !important;
+  border-bottom: 4px solid #facc15 !important; /* FinanceGov Yellow */
   background-color: #fff;
+  border-radius: 12px;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.1) !important;
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
 }
 
-.btn-warning {
-  background: linear-gradient(90deg, #f9a825, #fbc02d);
-  border: none;
+/* Small Buttons inside Cards (Read More) */
+.btn-warning.btn-sm {
+  background: #facc15 !important;
+  color: #000 !important;
+  border-radius: 50px !important;
+  font-weight: 600 !important;
+  min-width: auto !important; /* Overrides the 200px min-width from large buttons */
+  padding: 8px 20px !important;
 }
 
+/* --- TEXT UTILITIES --- */
 .text-primary {
-  color: #1e4d8b !important;
+  color: #1e4d8b !important; /* FinanceGov Blue */
 }

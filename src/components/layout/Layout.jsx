@@ -2,17 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-import Sidebar from "./Sidebar"; 
+import AdminSidebar from "./AdminSidebar"; 
 import "./Layout.css";
 
 const Layout = () => {
   const location = useLocation();
-  // Standardized to 'token'
   const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
-  // Sync auth state on location change (useful for login/logout transitions)
   useEffect(() => {
+    // Refresh auth state whenever location changes
     setIsAuthenticated(!!localStorage.getItem("token"));
   }, [location]);
 
@@ -26,12 +25,12 @@ const Layout = () => {
 
   return (
     <div className={`layout-wrapper ${layoutStatusClass}`}>
-      {/* Header is fixed at z-index 9999 */}
       <Header isAuthenticated={isAuthenticated} />
 
       <div className="layout-body">
-        {isAuthenticated && (
-          <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        {/* Force check for /admin/ in path if token is being tricky */}
+        {(isAuthenticated || location.pathname.includes('/admin')) && (
+          <AdminSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
         )}
 
         <main className="main-content">
