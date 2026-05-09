@@ -1,13 +1,17 @@
-/* ===============================
-   PAGE CONTAINER
-================================= */
+/* =========================================================
+   ADMIN DASHBOARD – FULL & FINAL CSS (SAFE COPY–PASTE)
+   No missing braces, no partial blocks
+========================================================= */
+
+/* PAGE CONTAINER */
 .admin-dashboard {
   padding: 20px;
+  background: #f4f7fb;
 }
 
-/* ===============================
+/* =========================================================
    HEADER
-================================= */
+========================================================= */
 .dashboard-header {
   margin-bottom: 25px;
 }
@@ -15,10 +19,10 @@
 .dashboard-header .badge {
   background: #fcbf49;
   color: #143859;
-  padding: 5px 12px;
-  border-radius: 6px;
+  padding: 6px 14px;
+  border-radius: 8px;
   font-size: 13px;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .dashboard-header h2 {
@@ -31,9 +35,9 @@
   font-size: 14px;
 }
 
-/* ===============================
-   CARDS
-================================= */
+/* =========================================================
+   DASHBOARD CARDS
+========================================================= */
 .dashboard-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -42,14 +46,14 @@
 }
 
 .dashboard-card {
-  background: linear-gradient(135deg, #ffffff, #f4f7fb);
-  border-radius: 12px;
+  background: #ffffff;
+  border-radius: 14px;
   padding: 20px;
   display: flex;
   align-items: center;
   gap: 15px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-  transition: 0.25s;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease;
 }
 
 .dashboard-card:hover {
@@ -58,19 +62,19 @@
 
 .card-icon {
   background: #143859;
-  color: white;
+  color: #ffffff;
   padding: 14px;
   border-radius: 10px;
 }
 
-/* ===============================
+/* =========================================================
    SECTION
-================================= */
+========================================================= */
 .dashboard-section {
   background: #ffffff;
   padding: 22px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
 .dashboard-section h3 {
@@ -78,51 +82,46 @@
   font-size: 18px;
 }
 
-/* ===============================
-   TABLE CONTAINER (IMPORTANT FIX)
-================================= */
+/* =========================================================
+   TABLE CONTAINER (CRITICAL FIX)
+========================================================= */
 .table-container {
   width: 100%;
-  overflow-x: auto;  /* ✅ KEY FIX */
+  overflow-x: auto;
   margin-top: 15px;
 }
 
-/* ===============================
-   TABLE
-================================= */
+/* =========================================================
+   USERS TABLE
+========================================================= */
 .users-table {
   width: 100%;
-  min-width: 900px;  /* ✅ prevents cutting */
+  min-width: 900px;
   border-collapse: collapse;
   font-size: 14px;
 }
 
 .users-table thead {
   background: #143859;
-  color: white;
+  color: #ffffff;
 }
 
-.users-table th {
-  padding: 14px;
-  font-size: 12px;
-  text-align: left;
-}
-
+.users-table th,
 .users-table td {
   padding: 14px;
-  border-bottom: 1px solid #eee;
+  text-align: left;
+  border-bottom: 1px solid #eeeeee;
+  vertical-align: middle;
 }
 
-/* ===============================
-   HOVER
-================================= */
+/* ROW HOVER */
 .users-table tbody tr:hover {
   background: #f4f8ff;
 }
 
-/* ===============================
-   ROLE BADGE
-================================= */
+/* =========================================================
+   ROLE BADGES
+========================================================= */
 .role-badge {
   padding: 5px 10px;
   border-radius: 20px;
@@ -132,9 +131,9 @@
   color: #b45309;
 }
 
-/* ===============================
-   STATUS
-================================= */
+/* =========================================================
+   STATUS BADGES
+========================================================= */
 .status-badge {
   padding: 5px 10px;
   border-radius: 20px;
@@ -144,49 +143,49 @@
 
 .status-badge.active {
   background: #198754;
-  color: white;
+  color: #ffffff;
 }
 
-/* ===============================
-   ✅ ACTION BUTTON FIX (VERY IMPORTANT)
-================================= */
+/* =========================================================
+   ACTION BUTTONS (COMPACT – FINAL)
+========================================================= */
 .action-cell {
   display: flex;
   gap: 6px;
   align-items: center;
 }
 
-/* ✅ SMALL BUTTONS */
+/* BUTTON BASE */
 .btn {
-  padding: 4px 8px;      /* ✅ reduced */
-  font-size: 11px;       /* ✅ smaller text */
+  padding: 4px 8px;
+  font-size: 11px;
   border-radius: 6px;
   border: none;
   cursor: pointer;
   white-space: nowrap;
 }
 
-/* VIEW */
+/* VIEW BUTTON */
 .view-btn {
   background: #29548a;
-  color: white;
+  color: #ffffff;
 }
 
-/* DELETE */
+/* DELETE BUTTON */
 .delete-btn {
   background: #dc3545;
-  color: white;
+  color: #ffffff;
 }
 
-/* LOCK */
+/* LOCK BUTTON */
 .lock-btn {
-  background: #ccc;
+  background: #cccccc;
   cursor: not-allowed;
 }
 
-/* ===============================
+/* =========================================================
    MODAL
-================================= */
+========================================================= */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -194,14 +193,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 999;
 }
 
 .modal-box {
-  background: white;
+  background: #ffffff;
   padding: 25px;
-  border-radius: 10px;
+  border-radius: 12px;
   width: 300px;
   text-align: center;
+}
+
+.modal-box h4 {
+  margin-bottom: 10px;
 }
 
 .modal-actions {
@@ -214,15 +218,14 @@
   padding: 8px 14px;
   border-radius: 6px;
   border: none;
+  cursor: pointer;
 }
 
-/* CANCEL */
-.cancel {
-  background: #ccc;
+.modal-btn.cancel {
+  background: #cccccc;
 }
 
-/* CONFIRM */
-.confirm {
+.modal-btn.confirm {
   background: #dc3545;
-  color: white;
+  color: #ffffff;
 }

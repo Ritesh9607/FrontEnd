@@ -10,16 +10,17 @@ const EditUser = () => {
 
   const [formData, setFormData] = useState({
     username: "",
-    email: "",
-    role: "",
+    email: ""
   });
 
-  // ✅ FIXED FETCH USER
+  const [loading, setLoading] = useState(false);
+
+  // ✅ FETCH USER
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:9091/api/users/getuserbyid/${id}`, // ✅ FIXED
+          `http://localhost:9091/api/users/getuserbyid/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -27,16 +28,12 @@ const EditUser = () => {
           }
         );
 
-        console.log("User loaded:", res.data);
-
         setFormData({
           username: res.data.username || "",
           email: res.data.email || "",
-          role: res.data.role || "",
         });
 
       } catch (err) {
-        console.error("Fetch error:", err);
         toast.error("Failed to load user ❌");
       }
     };
@@ -44,7 +41,7 @@ const EditUser = () => {
     fetchUser();
   }, [id]);
 
-  // ✅ HANDLE INPUT
+  // ✅ INPUT CHANGE
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -52,19 +49,17 @@ const EditUser = () => {
     });
   };
 
-  // ✅ SUBMIT
+  // ✅ SUBMIT (NO ROLE SENT)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       await axios.put(
         `http://localhost:9091/api/users/${id}`,
         {
           username: formData.username,
-          email: formData.email,
-          role: {
-            roleName: formData.role,
-          },
+          email: formData.email
         },
         {
           headers: {
@@ -77,14 +72,14 @@ const EditUser = () => {
       navigate("/admin/users");
 
     } catch (err) {
-      console.error("Update error:", err);
       toast.error("Update failed ❌");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="edit-user-container">
-
       <div className="edit-card">
         <h2>Edit User</h2>
 
@@ -96,6 +91,7 @@ const EditUser = () => {
             name="username"
             value={formData.username}
             onChange={handleChange}
+            required
           />
 
           <label>Email</label>
@@ -104,33 +100,12 @@ const EditUser = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            required
           />
-
-          <label>Role</label>
-          <select
-            name="role"
-            value={formData.role}
-            onChange={handleChange}
-          >
-            <option value="ROLE_ADMIN">Admin</option>
-            <option value="ROLE_COMPLIANCE_OFFICER">
-              Compliance Officer
-            </option>
-            <option value="ROLE_CITIZEN">Citizen</option>
-             <option value="ROLE_FINANCIAL_OFFICER">
-              Financial Officer
-            </option>
-             <option value="ROLE_PROGRAM_MANAGER">
-              Program Manager
-            </option>
-             <option value="ROLE_GOVERNMENT_AUDITOR">
-              Government Auditor
-            </option>
-          </select>
 
           <div className="form-actions">
             <button type="submit" className="btn save-btn">
-              Save
+              {loading ? "Saving..." : "Save"}
             </button>
 
             <button
@@ -144,7 +119,6 @@ const EditUser = () => {
 
         </form>
       </div>
-
     </div>
   );
 };
