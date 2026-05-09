@@ -27,7 +27,6 @@ const UsersPage = () => {
         setUsers(res.data);
         setFilteredUsers(res.data);
       } catch (err) {
-        console.error(err);
         toast.error("Failed to load users ❌");
       }
     };
@@ -55,7 +54,7 @@ const UsersPage = () => {
     setCurrentPage(1);
   }, [search, filter, users]);
 
-  // ✅ DELETE
+  // ✅ DEACTIVATE (SOFT DELETE)
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:9091/api/users/${id}`, {
@@ -72,15 +71,15 @@ const UsersPage = () => {
 
       toast.success("User deactivated ✅");
     } catch {
-      toast.error("Operation failed ❌");
+      toast.error("Deactivate failed ❌");
     }
   };
 
-  // ✅ RESTORE
+  // ✅ RESTORE USER (✅ FIXED ENDPOINT)
   const handleRestore = async (id) => {
     try {
       await axios.put(
-        `http://localhost:9091/api/users/${id}/status?status=ACTIVE`,
+        `http://localhost:9091/api/users/${id}/restore`,
         {},
         {
           headers: {
@@ -96,7 +95,7 @@ const UsersPage = () => {
       );
 
       toast.success("User restored ✅");
-    } catch {
+    } catch (err) {
       toast.error("Restore failed ❌");
     }
   };
@@ -120,10 +119,7 @@ const UsersPage = () => {
           onChange={(e) => setSearch(e.target.value)}
         />
 
-        <select
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        >
+        <select value={filter} onChange={(e) => setFilter(e.target.value)}>
           <option value="ALL">All</option>
           <option value="ACTIVE">Active</option>
           <option value="INACTIVE">Inactive</option>
@@ -158,7 +154,6 @@ const UsersPage = () => {
                   <td>{user.username}</td>
                   <td>{user.email}</td>
 
-                  {/* ✅ ROLE */}
                   <td>
                     <span
                       className={`role-badge ${
@@ -173,7 +168,6 @@ const UsersPage = () => {
                     </span>
                   </td>
 
-                  {/* ✅ STATUS */}
                   <td>
                     <span
                       className={`status-badge ${
@@ -186,7 +180,6 @@ const UsersPage = () => {
                     </span>
                   </td>
 
-                  {/* ✅ ACTIONS */}
                   <td className="action-cell">
                     <button
                       className="btn view-btn"
