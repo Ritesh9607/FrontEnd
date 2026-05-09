@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Users, UserCheck, Activity, Clock } from "lucide-react";
+import { Users, UserCheck, UserX, ShieldCheck } from "lucide-react";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -13,7 +13,7 @@ const AdminDashboard = () => {
 
   const navigate = useNavigate();
 
-  // ✅ FETCH USERS
+  // ✅ FETCH USERS (ONLY REAL DATA)
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -22,7 +22,6 @@ const AdminDashboard = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-
         setUsers(res.data);
       } catch (err) {
         toast.error("Failed to load users ❌");
@@ -34,7 +33,17 @@ const AdminDashboard = () => {
     fetchUsers();
   }, []);
 
-  // ✅ DELETE USER
+  /* ======================
+     REAL DASHBOARD METRICS
+  ====================== */
+  const totalUsers = users.length;
+  const activeUsers = users.filter(u => u.status === "ACTIVE").length;
+  const inactiveUsers = users.filter(u => u.status === "INACTIVE").length;
+  const complianceOfficers = users.filter(
+    u => u.role === "ROLE_COMPLIANCE_OFFICER"
+  ).length;
+
+  // ✅ SOFT DELETE
   const handleDelete = async () => {
     try {
       await axios.delete(
@@ -46,8 +55,8 @@ const AdminDashboard = () => {
         }
       );
 
-      setUsers((prev) =>
-        prev.map((u) =>
+      setUsers(prev =>
+        prev.map(u =>
           u.userId === selectedUserId
             ? { ...u, status: "INACTIVE" }
             : u
@@ -63,13 +72,6 @@ const AdminDashboard = () => {
     }
   };
 
-  const stats = [
-    { title: "Total Users", value: users.length, icon: <Users /> },
-    { title: "Officers", value: "45", icon: <UserCheck /> },
-    { title: "Active Sessions", value: "320", icon: <Activity /> },
-    { title: "Logs", value: "89", icon: <Clock /> },
-  ];
-
   return (
     <div className="admin-dashboard">
 
@@ -77,37 +79,60 @@ const AdminDashboard = () => {
       <div className="dashboard-header">
         <span className="badge">ADMIN PANEL</span>
         <h2>Welcome, Admin</h2>
-        <p>System overview dashboard</p>
+        <p>System overview dashboard (real‑time)</p>
       </div>
 
-      {/* CARDS */}
+      {/* ✅ REAL KPI CARDS */}
       <div className="dashboard-cards">
-        {stats.map((s, i) => (
-          <div key={i} className="dashboard-card">
-            <div className="card-icon">{s.icon}</div>
-            <div>
-              <h3>{s.value}</h3>
-              <p>{s.title}</p>
-            </div>
+
+        <div className="dashboard-card">
+          <div className="card-icon"><Users /></div>
+          <div>
+            <h3>{totalUsers}</h3>
+            <p>Total Users</p>
           </div>
-        ))}
+        </div>
+
+        <div className="dashboard-card">
+          <div className="card-icon"><UserCheck /></div>
+          <div>
+            <h3>{activeUsers}</h3>
+            <p>Active Users</p>
+          </div>
+        </div>
+
+        <div className="dashboard-card">
+          <div className="card-icon"><UserX /></div>
+          <div>
+            <h3>{inactiveUsers}</h3>
+            <p>Inactive Users</p>
+          </div>
+        </div>
+
+        <div className="dashboard-card">
+          <div className="card-icon"><ShieldCheck /></div>
+          <div>
+            <h3>{complianceOfficers}</h3>
+            <p>Compliance Officers</p>
+          </div>
+        </div>
+
       </div>
 
-      {/* ✅ TABLE SECTION */}
+      {/* USERS OVERVIEW TABLE */}
       <div className="dashboard-section">
-        <h3>Users Overview</h3>
+        <h3>Active Users Overview</h3>
 
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <div className="table-container"> {/* ✅ IMPORTANT FIX */}
+          <div className="table-container">
             <table className="users-table">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Name</th>
                   <th>Email</th>
-                  <th>Phone</th>
                   <th>Role</th>
                   <th>Status</th>
                   <th>Actions</th>
@@ -116,57 +141,39 @@ const AdminDashboard = () => {
 
               <tbody>
                 {users
-                  .filter((u) => u.status === "ACTIVE")
+                  .filter(u => u.status === "ACTIVE")
                   .slice(0, 5)
-                  .map((user) => (
+                  .map(user => (
                     <tr key={user.userId}>
                       <td>{user.userId}</td>
                       <td>{user.username}</td>
                       <td>{user.email}</td>
-                      <td>{user.phone}</td>
 
-                      {/* ROLE */}
                       <td>
-                        <span
-                          className={`role-badge ${
-                            user.role === "ROLE_ADMIN"
-                              ? "role-admin"
-                              : user.role ===
-                                "ROLE_COMPLIANCE_OFFICER"
-                              ? "role-officer"
-                              : "role-citizen"
-                          }`}
-                        >
+                        <span className="role-badge">
                           {user.role.replace("ROLE_", "")}
                         </span>
                       </td>
 
-                      {/* STATUS */}
                       <td>
                         <span className="status-badge active">
                           {user.status}
                         </span>
                       </td>
 
-                      {/* ✅ ACTIONS FIXED */}
                       <td>
                         <div className="action-cell">
                           <button
                             className="btn view-btn"
                             onClick={() =>
-                              navigate(
-                                `/admin/users/${user.userId}`
-                              )
+                              navigate(`/admin/users/${user.userId}`)
                             }
                           >
                             View
                           </button>
 
                           {user.role === "ROLE_ADMIN" ? (
-                            <button
-                              className="btn lock-btn"
-                              disabled
-                            >
+                            <button className="btn lock-btn" disabled>
                               🔒
                             </button>
                           ) : (
@@ -190,7 +197,7 @@ const AdminDashboard = () => {
         )}
       </div>
 
-      {/* ✅ MODAL */}
+      {/* CONFIRM MODAL */}
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-box">
@@ -215,6 +222,7 @@ const AdminDashboard = () => {
           </div>
         </div>
       )}
+
     </div>
   );
 };

@@ -16,6 +16,7 @@ import UsersPage from "./roles/Admin/riteshModule1/UsersPage";
 import UserDetails from "./roles/Admin/riteshModule1/UserDetails";
 import EditUser from "./roles/Admin/riteshModule1/EditUser";
 import AdminDashboard from "./roles/Admin/riteshModule1/AdminDashboard";
+import Analytics from "./roles/Admin/riteshModule1/Analytics";
 
 // Layout
 import Layout from "./components/layout/Layout";
@@ -54,6 +55,7 @@ function App() {
           <Route path="admin/dashboard" element={<AdminDashboard />} />
           <Route path="admin/users" element={<UsersPage />} />
           <Route path="admin/users/:id" element={<UserDetails />} />
+          <Route path="admin/analytics" element={<Analytics />} />
           
           {/* ✅ ✅ FIXED EDIT ROUTE */}
           <Route path="admin/users/edit/:id" element={<EditUser />} />
