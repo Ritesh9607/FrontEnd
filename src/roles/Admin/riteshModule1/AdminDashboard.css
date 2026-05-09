@@ -1,17 +1,14 @@
-/* =========================================================
-   ADMIN DASHBOARD – FULL & FINAL CSS (SAFE COPY–PASTE)
-   No missing braces, no partial blocks
-========================================================= */
+/* =====================================================
+   ADMIN DASHBOARD – COMPLETE & STABLE CSS
+   (Safe to delete old file and paste this)
+===================================================== */
 
-/* PAGE CONTAINER */
 .admin-dashboard {
   padding: 20px;
   background: #f4f7fb;
 }
 
-/* =========================================================
-   HEADER
-========================================================= */
+/* ================= HEADER ================= */
 .dashboard-header {
   margin-bottom: 25px;
 }
@@ -35,9 +32,7 @@
   font-size: 14px;
 }
 
-/* =========================================================
-   DASHBOARD CARDS
-========================================================= */
+/* ================= KPI CARDS ================= */
 .dashboard-cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -48,57 +43,45 @@
 .dashboard-card {
   background: #ffffff;
   border-radius: 14px;
-  padding: 20px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
+  padding: 22px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-  transition: transform 0.25s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.dashboard-card h3 {
+  font-size: 26px;
+  margin-bottom: 5px;
+}
+
+.dashboard-card p {
+  font-weight: 600;
+  color: #555;
+}
+
+/* ✅ HOVER RESTORED */
 .dashboard-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 35px rgba(0,0,0,0.15);
 }
 
-.card-icon {
-  background: #143859;
-  color: #ffffff;
-  padding: 14px;
-  border-radius: 10px;
-}
-
-/* =========================================================
-   SECTION
-========================================================= */
+/* ================= SECTION ================= */
 .dashboard-section {
   background: #ffffff;
-  padding: 22px;
+  padding: 25px;
   border-radius: 14px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-.dashboard-section h3 {
-  margin-bottom: 15px;
-  font-size: 18px;
-}
-
-/* =========================================================
-   TABLE CONTAINER (CRITICAL FIX)
-========================================================= */
+/* ================= TABLE ================= */
 .table-container {
   width: 100%;
   overflow-x: auto;
-  margin-top: 15px;
 }
 
-/* =========================================================
-   USERS TABLE
-========================================================= */
 .users-table {
   width: 100%;
-  min-width: 900px;
   border-collapse: collapse;
-  font-size: 14px;
+  min-width: 900px;
 }
 
 .users-table thead {
@@ -111,33 +94,27 @@
   padding: 14px;
   text-align: left;
   border-bottom: 1px solid #eeeeee;
-  vertical-align: middle;
 }
 
-/* ROW HOVER */
 .users-table tbody tr:hover {
   background: #f4f8ff;
 }
 
-/* =========================================================
-   ROLE BADGES
-========================================================= */
+/* ================= ROLE BADGE ================= */
 .role-badge {
-  padding: 5px 10px;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
-  background: #fff3cd;
+  background: #ffe8c7;
   color: #b45309;
 }
 
-/* =========================================================
-   STATUS BADGES
-========================================================= */
+/* ================= STATUS BADGE ================= */
 .status-badge {
-  padding: 5px 10px;
+  padding: 6px 14px;
   border-radius: 20px;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 600;
 }
 
@@ -146,50 +123,60 @@
   color: #ffffff;
 }
 
-/* =========================================================
-   ACTION BUTTONS (COMPACT – FINAL)
-========================================================= */
+.status-badge.inactive {
+  background: #dc3545;
+  color: #ffffff;
+}
+
+/* ================= ACTION BUTTONS ================= */
 .action-cell {
   display: flex;
-  gap: 6px;
+  gap: 10px;
   align-items: center;
 }
 
-/* BUTTON BASE */
 .btn {
-  padding: 4px 8px;
-  font-size: 11px;
-  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
-  white-space: nowrap;
+  transition: filter 0.25s ease, transform 0.25s ease;
 }
 
-/* VIEW BUTTON */
+/* VIEW */
 .view-btn {
   background: #29548a;
   color: #ffffff;
 }
 
-/* DELETE BUTTON */
+.view-btn:hover {
+  filter: brightness(1.1);
+}
+
+/* DELETE */
 .delete-btn {
   background: #dc3545;
   color: #ffffff;
 }
 
-/* LOCK BUTTON */
-.lock-btn {
-  background: #cccccc;
-  cursor: not-allowed;
+.delete-btn:hover {
+  filter: brightness(1.1);
 }
 
-/* =========================================================
-   MODAL
-========================================================= */
+/* ✅ DISABLED DELETE FOR ADMIN */
+.disabled-btn {
+  background: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
+}
+
+/* ================= MODAL ================= */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
+  background: rgba(0,0,0,0.45);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -198,27 +185,24 @@
 
 .modal-box {
   background: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  width: 300px;
+  padding: 26px;
+  border-radius: 14px;
+  width: 320px;
   text-align: center;
-}
-
-.modal-box h4 {
-  margin-bottom: 10px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.25);
 }
 
 .modal-actions {
-  margin-top: 15px;
+  margin-top: 18px;
   display: flex;
   justify-content: space-between;
 }
 
 .modal-btn {
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
   border: none;
-  cursor: pointer;
+  font-size: 13px;
 }
 
 .modal-btn.cancel {

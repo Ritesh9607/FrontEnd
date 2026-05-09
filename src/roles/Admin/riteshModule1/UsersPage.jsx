@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 import "./UsersPage.css";
 
 const UsersPage = () => {
@@ -12,7 +11,6 @@ const UsersPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const USERS_PER_PAGE = 5;
-  const navigate = useNavigate();
 
   // ✅ FETCH USERS
   useEffect(() => {
@@ -23,10 +21,9 @@ const UsersPage = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-
         setUsers(res.data);
         setFilteredUsers(res.data);
-      } catch (err) {
+      } catch {
         toast.error("Failed to load users ❌");
       }
     };
@@ -34,17 +31,17 @@ const UsersPage = () => {
     fetchUsers();
   }, []);
 
-  // ✅ FILTER + SEARCH
+  // ✅ SEARCH + FILTER
   useEffect(() => {
     let data = users;
 
     if (filter !== "ALL") {
-      data = data.filter((u) => u.status === filter);
+      data = data.filter(u => u.status === filter);
     }
 
     if (search) {
       data = data.filter(
-        (u) =>
+        u =>
           u.username.toLowerCase().includes(search.toLowerCase()) ||
           u.email.toLowerCase().includes(search.toLowerCase())
       );
@@ -53,52 +50,6 @@ const UsersPage = () => {
     setFilteredUsers(data);
     setCurrentPage(1);
   }, [search, filter, users]);
-
-  // ✅ DEACTIVATE (SOFT DELETE)
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://localhost:9091/api/users/${id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-
-      setUsers((prev) =>
-        prev.map((u) =>
-          u.userId === id ? { ...u, status: "INACTIVE" } : u
-        )
-      );
-
-      toast.success("User deactivated ✅");
-    } catch {
-      toast.error("Deactivate failed ❌");
-    }
-  };
-
-  // ✅ RESTORE USER (✅ FIXED ENDPOINT)
-  const handleRestore = async (id) => {
-    try {
-      await axios.put(
-        `http://localhost:9091/api/users/${id}/restore`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      setUsers((prev) =>
-        prev.map((u) =>
-          u.userId === id ? { ...u, status: "ACTIVE" } : u
-        )
-      );
-
-      toast.success("User restored ✅");
-    } catch (err) {
-      toast.error("Restore failed ❌");
-    }
-  };
 
   // ✅ PAGINATION
   const indexOfLast = currentPage * USERS_PER_PAGE;
@@ -110,23 +61,24 @@ const UsersPage = () => {
     <div className="users-page">
       <h2>User Management</h2>
 
-      {/* SEARCH + FILTER */}
       <div className="controls">
         <input
           type="text"
           placeholder="Search by name or email..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
         />
 
-        <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+        <select
+          value={filter}
+          onChange={e => setFilter(e.target.value)}
+        >
           <option value="ALL">All</option>
           <option value="ACTIVE">Active</option>
           <option value="INACTIVE">Inactive</option>
         </select>
       </div>
 
-      {/* TABLE */}
       <div className="table-container">
         <table className="users-table">
           <thead>
@@ -136,97 +88,51 @@ const UsersPage = () => {
               <th>Email</th>
               <th>Role</th>
               <th>Status</th>
-              <th className="action-col">Actions</th>
+              <th>Actions</th>
             </tr>
           </thead>
 
           <tbody>
-            {currentUsers.length === 0 ? (
-              <tr>
-                <td colSpan="6" className="empty-state">
-                  No users found
+            {currentUsers.map(user => (
+              <tr key={user.userId}>
+                <td>{user.userId}</td>
+                <td>{user.username}</td>
+                <td>{user.email}</td>
+
+                <td>
+                  <span className="role-badge">
+                    {user.role.replace("ROLE_", "")}
+                  </span>
+                </td>
+
+                <td>
+                  <span
+                    className={`status-badge ${
+                      user.status === "ACTIVE"
+                        ? "active"
+                        : "inactive"
+                    }`}
+                  >
+                    {user.status}
+                  </span>
+                </td>
+
+                <td className="action-cell">
+                  <button className="btn view-btn">View</button>
+                  <button className="btn edit-btn">Edit</button>
+
+                  {user.status === "ACTIVE" ? (
+                    <button className="btn delete-btn">Deactivate</button>
+                  ) : (
+                    <button className="btn restore-btn">Restore</button>
+                  )}
                 </td>
               </tr>
-            ) : (
-              currentUsers.map((user) => (
-                <tr key={user.userId}>
-                  <td>{user.userId}</td>
-                  <td>{user.username}</td>
-                  <td>{user.email}</td>
-
-                  <td>
-                    <span
-                      className={`role-badge ${
-                        user.role === "ROLE_ADMIN"
-                          ? "role-admin"
-                          : user.role === "ROLE_COMPLIANCE_OFFICER"
-                          ? "role-officer"
-                          : "role-citizen"
-                      }`}
-                    >
-                      {user.role.replace("ROLE_", "")}
-                    </span>
-                  </td>
-
-                  <td>
-                    <span
-                      className={`status-badge ${
-                        user.status === "ACTIVE"
-                          ? "active"
-                          : "inactive"
-                      }`}
-                    >
-                      {user.status}
-                    </span>
-                  </td>
-
-                  <td className="action-cell">
-                    <button
-                      className="btn view-btn"
-                      onClick={() =>
-                        navigate(`/admin/users/${user.userId}`)
-                      }
-                    >
-                      View
-                    </button>
-
-                    <button
-                      className="btn edit-btn"
-                      onClick={() =>
-                        navigate(`/admin/users/edit/${user.userId}`)
-                      }
-                    >
-                      Edit
-                    </button>
-
-                    {user.role === "ROLE_ADMIN" ? (
-                      <button className="btn lock-btn" disabled>
-                        🔒
-                      </button>
-                    ) : user.status === "ACTIVE" ? (
-                      <button
-                        className="btn delete-btn"
-                        onClick={() => handleDelete(user.userId)}
-                      >
-                        Deactivate
-                      </button>
-                    ) : (
-                      <button
-                        className="btn restore-btn"
-                        onClick={() => handleRestore(user.userId)}
-                      >
-                        Restore
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))
-            )}
+            ))}
           </tbody>
         </table>
       </div>
 
-      {/* PAGINATION */}
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => (
           <button

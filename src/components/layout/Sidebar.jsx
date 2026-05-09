@@ -35,7 +35,7 @@ export const Sidebar = ({ onToggle, initialState = true }) => {
       title: "USER MANAGEMENT",
       items: [
         { label: "All Users", to: "/admin/users", icon: Users },
-        { label: "Create Officer", to: "/admin/create-user", icon: UserPlus },
+        { label: "Create Officer", to: "/admin/create-officer", icon: UserPlus },
       ],
     },
     {

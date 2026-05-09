@@ -14,64 +14,51 @@ const Analytics = () => {
       });
       setUsers(res.data);
     };
-
     fetchUsers();
   }, []);
 
-  /* =====================
-     CALCULATED ANALYTICS
-  ====================== */
   const totalUsers = users.length;
   const activeUsers = users.filter(u => u.status === "ACTIVE").length;
   const inactiveUsers = users.filter(u => u.status === "INACTIVE").length;
-
-  const adminCount = users.filter(u => u.role === "ROLE_ADMIN").length;
-  const officerCount = users.filter(
+  const officers = users.filter(
     u => u.role === "ROLE_COMPLIANCE_OFFICER"
-  ).length;
-  const citizenCount = users.filter(
-    u => u.role === "ROLE_CITIZEN"
   ).length;
 
   const activePercent =
     totalUsers === 0 ? 0 : Math.round((activeUsers / totalUsers) * 100);
   const inactivePercent = 100 - activePercent;
+  const officerPercent =
+    totalUsers === 0 ? 0 : Math.round((officers / totalUsers) * 100);
 
   return (
     <div className="analytics-page">
 
-      {/* HEADER */}
       <div className="analytics-header">
         <h2>System Analytics</h2>
-        <p>Computed using User Management data</p>
+        <p>Usage, risk and governance overview</p>
       </div>
 
       {/* KPI CARDS */}
       <div className="analytics-cards">
-
         <div className="analytics-card blue">
           <h3>{totalUsers}</h3>
           <p>Total Users</p>
         </div>
-
         <div className="analytics-card green">
           <h3>{activeUsers}</h3>
           <p>Active Users</p>
         </div>
-
         <div className="analytics-card red">
           <h3>{inactiveUsers}</h3>
           <p>Inactive Users</p>
         </div>
-
         <div className="analytics-card orange">
-          <h3>{officerCount}</h3>
+          <h3>{officers}</h3>
           <p>Compliance Officers</p>
         </div>
-
       </div>
 
-      {/* DONUT ANALYTICS */}
+      {/* PIE */}
       <div className="analytics-section">
         <h3>Active vs Inactive Users</h3>
 
@@ -80,70 +67,60 @@ const Analytics = () => {
             className="donut"
             style={{
               background: `conic-gradient(
-                #198754 ${activePercent}%,
-                #dc3545 ${activePercent}% 100%
-              )`
+                #22c55e ${activePercent}%,
+                #ef4444 ${activePercent}% 100%
+              )`,
             }}
           >
             <div className="donut-center">
-              {activePercent}%<br />
-              Active
+              {activePercent}%<br />Active
             </div>
           </div>
 
           <div className="donut-legend">
-            <div>
-              <span className="dot green"></span> Active ({activeUsers})
-            </div>
-            <div>
-              <span className="dot red"></span> Inactive ({inactiveUsers})
-            </div>
+            <div><span className="dot green"></span> Active ({activeUsers})</div>
+            <div><span className="dot red"></span> Inactive ({inactiveUsers})</div>
           </div>
         </div>
-      </div>
 
-      {/* ROLE BAR ANALYTICS */}
-      <div className="analytics-section">
-        <h3>Users by Role</h3>
+        {/* ✅ SLIM GOVERNANCE BARS (DIFFERENT MEANING) */}
+        <div className="governance-bars">
 
-        <div className="bar-group">
-
-          <div className="bar-row">
-            <span>Admin</span>
-            <div className="bar">
+          <div className="gov-row">
+            <span>Active Utilization</span>
+            <div className="gov-track">
               <div
-                className="bar-fill blue"
-                style={{ width: `${(adminCount / totalUsers) * 100 || 0}%` }}
+                className="gov-fill active"
+                style={{ width: `${activePercent}%` }}
               />
             </div>
-            <span>{adminCount}</span>
+            <span>{activePercent}%</span>
           </div>
 
-          <div className="bar-row">
-            <span>Officer</span>
-            <div className="bar">
+          <div className="gov-row">
+            <span>Dormant Accounts</span>
+            <div className="gov-track">
               <div
-                className="bar-fill orange"
-                style={{ width: `${(officerCount / totalUsers) * 100 || 0}%` }}
+                className="gov-fill inactive"
+                style={{ width: `${inactivePercent}%` }}
               />
             </div>
-            <span>{officerCount}</span>
+            <span>{inactivePercent}%</span>
           </div>
 
-          <div className="bar-row">
-            <span>Citizen</span>
-            <div className="bar">
+          <div className="gov-row">
+            <span>Monitoring Capacity</span>
+            <div className="gov-track">
               <div
-                className="bar-fill green"
-                style={{ width: `${(citizenCount / totalUsers) * 100 || 0}%` }}
+                className="gov-fill officer"
+                style={{ width: `${officerPercent}%` }}
               />
             </div>
-            <span>{citizenCount}</span>
+            <span>{officerPercent}%</span>
           </div>
 
         </div>
       </div>
-
     </div>
   );
 };

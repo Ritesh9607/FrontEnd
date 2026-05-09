@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Users, UserCheck, UserX, ShieldCheck } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
@@ -13,7 +12,7 @@ const AdminDashboard = () => {
 
   const navigate = useNavigate();
 
-  // ✅ FETCH USERS (ONLY REAL DATA)
+  // ✅ FETCH USERS
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -23,7 +22,7 @@ const AdminDashboard = () => {
           },
         });
         setUsers(res.data);
-      } catch (err) {
+      } catch {
         toast.error("Failed to load users ❌");
       } finally {
         setLoading(false);
@@ -33,17 +32,7 @@ const AdminDashboard = () => {
     fetchUsers();
   }, []);
 
-  /* ======================
-     REAL DASHBOARD METRICS
-  ====================== */
-  const totalUsers = users.length;
-  const activeUsers = users.filter(u => u.status === "ACTIVE").length;
-  const inactiveUsers = users.filter(u => u.status === "INACTIVE").length;
-  const complianceOfficers = users.filter(
-    u => u.role === "ROLE_COMPLIANCE_OFFICER"
-  ).length;
-
-  // ✅ SOFT DELETE
+  // ✅ DELETE HANDLER
   const handleDelete = async () => {
     try {
       await axios.delete(
@@ -79,47 +68,10 @@ const AdminDashboard = () => {
       <div className="dashboard-header">
         <span className="badge">ADMIN PANEL</span>
         <h2>Welcome, Admin</h2>
-        <p>System overview dashboard (real‑time)</p>
+        <p>System overview dashboard</p>
       </div>
 
-      {/* ✅ REAL KPI CARDS */}
-      <div className="dashboard-cards">
-
-        <div className="dashboard-card">
-          <div className="card-icon"><Users /></div>
-          <div>
-            <h3>{totalUsers}</h3>
-            <p>Total Users</p>
-          </div>
-        </div>
-
-        <div className="dashboard-card">
-          <div className="card-icon"><UserCheck /></div>
-          <div>
-            <h3>{activeUsers}</h3>
-            <p>Active Users</p>
-          </div>
-        </div>
-
-        <div className="dashboard-card">
-          <div className="card-icon"><UserX /></div>
-          <div>
-            <h3>{inactiveUsers}</h3>
-            <p>Inactive Users</p>
-          </div>
-        </div>
-
-        <div className="dashboard-card">
-          <div className="card-icon"><ShieldCheck /></div>
-          <div>
-            <h3>{complianceOfficers}</h3>
-            <p>Compliance Officers</p>
-          </div>
-        </div>
-
-      </div>
-
-      {/* USERS OVERVIEW TABLE */}
+      {/* USERS TABLE */}
       <div className="dashboard-section">
         <h3>Active Users Overview</h3>
 
@@ -163,6 +115,8 @@ const AdminDashboard = () => {
 
                       <td>
                         <div className="action-cell">
+
+                          {/* ✅ VIEW ALWAYS AVAILABLE */}
                           <button
                             className="btn view-btn"
                             onClick={() =>
@@ -172,9 +126,14 @@ const AdminDashboard = () => {
                             View
                           </button>
 
+                          {/* ✅ ADMIN → DELETE DISABLED */}
                           {user.role === "ROLE_ADMIN" ? (
-                            <button className="btn lock-btn" disabled>
-                              🔒
+                            <button
+                              className="btn delete-btn disabled-btn"
+                              disabled
+                              title="Admin cannot be deleted"
+                            >
+                              Delete
                             </button>
                           ) : (
                             <button
@@ -187,6 +146,7 @@ const AdminDashboard = () => {
                               Delete
                             </button>
                           )}
+
                         </div>
                       </td>
                     </tr>
