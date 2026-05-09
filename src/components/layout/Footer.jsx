@@ -2,24 +2,39 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, MapPin, Phone, Mail } from 'lucide-react';
 import './Footer.css';
- 
-export const Footer = () => {
+
+export const Footer = ({ sidebarOpen = true, isAuthenticated = true }) => {
   const currentYear = new Date().getFullYear();
-  const [currentTime, setCurrentTime] = useState(new Date().toLocaleTimeString('en-IN'));
- 
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleTimeString('en-IN')
+  );
+
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date().toLocaleTimeString('en-IN'));
     }, 1000);
     return () => clearInterval(timer);
   }, []);
- 
+
+  const sidebarWidth = isAuthenticated
+    ? sidebarOpen
+      ? 280
+      : 80
+    : 0;
+
   return (
     <motion.footer
       className="footer"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4 }}
+      style={{
+        marginLeft: sidebarWidth,
+        width: isAuthenticated
+          ? `calc(100% - ${sidebarWidth}px)`
+          : "100%",
+        transition: "all 0.3s ease"
+      }}
     >
       <div className="footer-content">
         <div className="footer-section">
@@ -37,27 +52,27 @@ export const Footer = () => {
             <span>FinanceGov@government.in</span>
           </div>
         </div>
- 
+
         <div className="footer-section">
           <h6>Quick Links</h6>
           <ul>
             <li><a href="#/">Home</a></li>
             <li><a href="#privacy">Privacy Policy</a></li>
-            <li><a href="#terms">Terms of Service</a></li>
+            <li><a href="#terms">Terms</a></li>
             <li><a href="#contact">Contact Us</a></li>
           </ul>
         </div>
- 
+
         <div className="footer-section">
           <h6>Resources</h6>
           <ul>
             <li><a href="#help">Help Center</a></li>
-            <li><a href="#docs">Documentation</a></li>
+            <li><a href="#docs">Docs</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="#support">Support</a></li>
           </ul>
         </div>
- 
+
         <div className="footer-section">
           <h6>Current Time</h6>
           <div className="footer-item">
@@ -65,16 +80,16 @@ export const Footer = () => {
           </div>
         </div>
       </div>
- 
+
       <div className="footer-bottom">
         <div className="footer-divider"></div>
         <div className="footer-copyright">
-          <p>&copy; {currentYear} Ministry of Finance. All rights reserved.</p>
+          <p>© {currentYear} Ministry of Finance. All rights reserved.</p>
           <p className="footer-version">Government System v1.0.0</p>
         </div>
       </div>
     </motion.footer>
   );
 };
- 
+
 export default Footer;

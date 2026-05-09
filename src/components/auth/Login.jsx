@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { authService } from '../../services/authService';
+import axios from 'axios';
 import './Auth.css';
 
 const Login = () => {
@@ -17,75 +17,102 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+
     try {
-      const response = await authService.login(credentials);
-      toast.success(response.message || "Login Successful!");
-      
-      // ✅ FIX: Backend returns "/api/admin/dashboard", 
-      // React needs "/admin/dashboard"
-      if (response.endpoint) {
-        const cleanPath = response.endpoint.replace('/api', '');
-        navigate(cleanPath);
-      } else {
-        navigate('/dashboard');
+      const response = await axios.post('http://localhost:9091/api/auth/login', credentials);
+
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
       }
-      
+
+      toast.success("Login Successful!");
+      navigate('/');
+
     } catch (err) {
-      toast.error(err.message || "Invalid credentials or Server error");
+      toast.error("Invalid credentials");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="auth-container" style={{ position: 'relative' }}>
-      <button 
-        className="auth-back-link" 
-        onClick={() => navigate('/')}
-        style={{
-          position: 'absolute', top: '20px', left: '20px', border: 'none',
-          background: 'none', color: '#1e4d8b', fontWeight: '600',
-          display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer'
-        }}
-      >
+    <div className="auth-page">
+
+      {/* Back Button */}
+      <button className="auth-back-btn" onClick={() => navigate('/')}>
         <ArrowLeft size={18} /> Back to Home
       </button>
 
-      <div className="login-card shadow-lg p-4">
-        <div className="text-center mb-4">
-          <h2 className="fw-bold text-primary">Finance<span className="text-warning">Gov</span></h2>
-          <p className="text-muted">Sign in to your secure portal</p>
+      <div className="auth-wrapper">
+
+        {/* ✅ LEFT SIDE (Professional Govt Info Panel) */}
+        <div className="auth-left">
+          
+<h1 className="brand-title">
+  <span className="finance">Finance</span>
+  <span className="gov">Gov</span>
+</h1>
+
+
+          <p className="tagline">
+            National Financial Regulation & Economic Governance System
+          </p>
+
+          <ul>
+            <li>✔ Secure Government Portal</li>
+            <li>✔ Manage Financial Programs</li>
+            <li>✔ Apply for Subsidies</li>
+            <li>✔ Track Compliance & Reports</li>
+          </ul>
         </div>
 
-        <form onSubmit={handleLogin}>
-          <div className="mb-3">
-            <label className="form-label">Email Address</label>
-            <input
-              type="email" name="email" className="form-control"
-              placeholder="e.g. ritesh@gov.in" required onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label">Password</label>
-            <input
-              type="password" name="password" className="form-control"
-              placeholder="••••••••" required onChange={handleChange}
-            />
-          </div>
-          <button 
-            type="submit" className="btn btn-primary w-100 py-2 fw-bold"
-            disabled={isSubmitting}
-          >
-            {isSubmitting ? "Authenticating..." : "LOGIN"}
-          </button>
-        </form>
+        {/* ✅ RIGHT SIDE (LOGIN CARD) */}
+        <div className="auth-right">
 
-        <div className="text-center mt-3">
-          <Link to="/forgot-password" style={{ fontSize: '0.9rem' }}>Forgot Password?</Link>
-          <hr />
-          <p className="mb-0">New user? <Link to="/register">Create an account</Link></p>
+          <div className="login-card">
+
+            <h2>Sign In</h2>
+            <p className="subtitle">Access your secure dashboard</p>
+
+            <form onSubmit={handleLogin}>
+              
+              <div className="mb-3">
+                <label>Email Address</label>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label>Password</label>
+                <input
+                  type="password"
+                  name="password"
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Signing in..." : "LOGIN"}
+              </button>
+
+            </form>
+
+            {/* ✅ REGISTER LINK */}
+            <div className="register-link">
+              New user? <Link to="/register">Register here</Link>
+            </div>
+
+          </div>
+
         </div>
+
       </div>
+
     </div>
   );
 };

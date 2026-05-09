@@ -1,46 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import React, { useState } from "react";
 import { Header } from "./Header";
-import { Footer } from "./Footer";
-import AdminSidebar from "./AdminSidebar"; 
-import "./Layout.css";
+import { Sidebar } from "./Sidebar";
+import Footer from "./Footer";
 
-const Layout = () => {
-  const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem("token"));
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-  useEffect(() => {
-    // Refresh auth state whenever location changes
-    setIsAuthenticated(!!localStorage.getItem("token"));
-  }, [location]);
-
-  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
-
-  const layoutStatusClass = !isAuthenticated 
-    ? "no-sidebar" 
-    : isSidebarOpen 
-      ? "sidebar-expanded" 
-      : "sidebar-collapsed";
+const Layout = ({ children }) => {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const isAuthenticated = !!localStorage.getItem("token");
 
   return (
-    <div className={`layout-wrapper ${layoutStatusClass}`}>
+    <div className="app-container">
+
       <Header isAuthenticated={isAuthenticated} />
 
-      <div className="layout-body">
-        {/* Force check for /admin/ in path if token is being tricky */}
-        {(isAuthenticated || location.pathname.includes('/admin')) && (
-          <AdminSidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+      <div className="main-container">
+        
+        {isAuthenticated && (
+          <Sidebar onToggle={setSidebarOpen} />
         )}
 
-        <main className="main-content">
-          <div className="content-inner">
-            <Outlet />
-          </div>
-        </main>
+        <div
+          className="content-area"
+          style={{
+            marginLeft: isAuthenticated
+              ? sidebarOpen
+                ? "280px"
+                : "80px"
+              : "0",
+            transition: "all 0.3s ease"
+          }}
+        >
+          {children}
+        </div>
+
       </div>
 
-      <Footer />
+      <Footer
+        sidebarOpen={sidebarOpen}
+        isAuthenticated={isAuthenticated}
+      />
+
     </div>
   );
 };
