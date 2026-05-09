@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import Footer from "./Footer";
+import { Outlet } from "react-router-dom";
 
 const Layout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -29,7 +30,7 @@ const Layout = ({ children }) => {
             transition: "all 0.3s ease"
           }}
         >
-          {children}
+          <Outlet /> {/* This will render the matched child route component */}
         </div>
 
       </div>

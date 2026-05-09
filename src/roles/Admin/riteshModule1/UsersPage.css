@@ -1,0 +1,181 @@
+.users-page {
+  padding: 20px;
+}
+
+.controls {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.controls input,
+.controls select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* TABLE */
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th {
+  background: #143859;
+  color: white;
+  padding: 14px;
+}
+
+.users-table td {
+  padding: 14px;
+  border-bottom: 1px solid #eee;
+  vertical-align: middle;
+}
+
+/* ✅ SMOOTH HOVER */
+.users-table tr {
+  transition: all 0.2s ease;
+}
+
+.users-table tr:hover {
+  background: #f4f8ff;
+  transform: translateY(-1px);
+}
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+
+/* BADGES */
+.role-badge {
+  background: #1e4d8b;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.status-badge.active {
+  background: green;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.status-badge.inactive {
+  background: red;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+/* BUTTONS */
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* DELETE */
+.delete-btn {
+  background: #dc3545;
+  color: white;
+}
+
+/* RESTORE */
+.restore-btn {
+  background: #198754;
+  color: white;
+}
+
+/* LOCK */
+.lock-btn {
+  background: #ccc;
+  color: #555;
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.lock-btn:hover{
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ✅ PAGINATION */
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: none;
+  background: #e9ecef;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.pagination button:hover {
+  background: #d0d7e2;
+}
+
+.pagination .active {
+  background: #143859;
+  color: white;
+}
+
+/* ✅ FIX ACTION COLUMN SPACING */
+/* ✅ ACTION BUTTON FIX */
+.action-cell {
+  display: flex;
+  gap: 12px;                 /* spacing between buttons */
+  align-items: center;
+  flex-wrap: wrap;           /* prevents cut issue */
+}
+
+/* ✅ BUTTON BASE */
+.action-cell .btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  min-width: 85px;           /* ensures visibility */
+  white-space: nowrap;
+}
+
+/* VIEW */
+.view-btn {
+  background: #29548a;
+  color: white;
+}
+
+/* EDIT */
+.edit-btn {
+  background: #f4b740;
+  color: #143859;
+}
+
+/* DELETE */
+.delete-btn {
+  background: #dc3545;
+  color: white;
+}
+
+/* RESTORE */
+.restore-btn {
+  background: #198754;
+  color: white;
+}
+
+/* LOCK */
+.lock-btn {
+  background: #dee2e6;
+  color: #666;
+  cursor: not-allowed;
+}

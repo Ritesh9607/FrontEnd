@@ -1,0 +1,143 @@
+/* ✅ MAIN CONTAINER *//* ✅ MAIN CON {
+  padding: 120px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  background: #f5f7fb;
+}
+
+/* ✅ CENTER CARD */
+.edit-card {
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ✅ FORM CARD */
+.edit-form {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.3s ease;
+}
+
+/* ✅ TITLE */
+.edit-card h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #143859;
+}
+
+/* ✅ LABEL */
+.edit-form label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+/* ✅ INPUT + SELECT */
+.edit-form input,
+.edit-form select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border-radius: 8px;
+  border: 1px solid #dcdcdc;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+/* ✅ INPUT FOCUS */
+.edit-form input:focus,
+.edit-form select:focus {
+  outline: none;
+  border-color: #143859;
+  box-shadow: 0 0 0 2px rgba(20, 56, 89, 0.1);
+}
+
+/* ✅ BUTTON CONTAINER */
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* ✅ BASE BUTTON */
+.btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+/* ✅ SAVE BUTTON */
+.save-btn {
+  background: #198754;
+  color: white;
+}
+
+.save-btn:hover {
+  background: #157347;
+  transform: translateY(-1px);
+}
+
+/* ✅ CANCEL BUTTON */
+.cancel-btn {
+  background: #dee2e6;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #cfd4da;
+  transform: translateY(-1px);
+}
+
+/* ✅ DISABLED BUTTON */
+.btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* ✅ NOTE TEXT (admin lock message) */
+.note-text {
+  font-size: 13px;
+  color: red;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+/* ✅ RESPONSIVE */
+@media (max-width: 600px) {
+  .edit-form {
+    padding: 20px;
+  }
+
+  .edit-card {
+    max-width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+}
+
+/* ✅ ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

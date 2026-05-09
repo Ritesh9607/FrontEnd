@@ -444,6 +444,10 @@ p {
   align-items: center;
 }
 
+.content-area{
+  padding-top: 90px;
+}
+
 .justify-content-between {
   justify-content: space-between;
 }

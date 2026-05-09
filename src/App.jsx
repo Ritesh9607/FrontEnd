@@ -12,6 +12,10 @@ import "./App.css";
 import Home from "./dashboard/Home";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import UsersPage from "./roles/Admin/riteshModule1/UsersPage";
+import UserDetails from "./roles/Admin/riteshModule1/UserDetails";
+import EditUser from "./roles/Admin/riteshModule1/EditUser";
+import AdminDashboard from "./roles/Admin/riteshModule1/AdminDashboard";
 
 // Layout
 import Layout from "./components/layout/Layout";
@@ -37,26 +41,39 @@ function App() {
       />
 
       <Routes>
-        {/* ✅ No Layout (Auth Pages) */}
+
+        {/* ✅ Auth Pages */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* ✅ With Layout */}
-        <Route
-          path="/*"
-          element={
-            <Layout>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/demo1" element={<h2>Dashboard Page</h2>} />
-                <Route path="/demo2" element={<h2>Page 2</h2>} />
-              </Routes>
-            </Layout>
-          }
-        />
+        {/* ✅ Layout Wrapper */}
+        <Route path="/" element={<Layout />}>
+
+          {/* ✅ Nested Pages */}
+          <Route index element={<Home />} />
+          <Route path="admin/dashboard" element={<AdminDashboard />} />
+          <Route path="admin/users" element={<UsersPage />} />
+          <Route path="admin/users/:id" element={<UserDetails />} />
+          
+          {/* ✅ ✅ FIXED EDIT ROUTE */}
+          <Route path="admin/users/edit/:id" element={<EditUser />} />
+
+        </Route>
+
       </Routes>
 
-      <ToastContainer />
+      {/* ✅ Toast */}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={true}
+        closeOnClick
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{ maxWidth: "500px", minWidth: "max-content" }}
+      />
     </Router>
   );
 }
