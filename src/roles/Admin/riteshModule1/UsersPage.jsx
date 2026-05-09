@@ -15,32 +15,25 @@ const UsersPage = () => {
   const navigate = useNavigate();
 
   // ✅ FETCH USERS
- useEffect(() => {
-  const fetchUsers = async () => {
-    try {
-      const res = await axios.get(
-        "http://localhost:9091/api/users", // ✅ FIXED
-        {
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const res = await axios.get("http://localhost:9091/api/users", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }
-      );
+        });
 
-      console.log("Users:", res.data);
+        setUsers(res.data);
+        setFilteredUsers(res.data);
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load users ❌");
+      }
+    };
 
-      setUsers(res.data);
-      setFilteredUsers(res.data);
-
-    } catch (err) {
-      console.error("Error fetching users:", err);
-      toast.error("Failed to load users ❌");
-    }
-  };
-
-  fetchUsers();
-}, []);
-
+    fetchUsers();
+  }, []);
 
   // ✅ FILTER + SEARCH
   useEffect(() => {
@@ -116,10 +109,9 @@ const UsersPage = () => {
 
   return (
     <div className="users-page">
-
       <h2>User Management</h2>
 
-      {/* ✅ SEARCH + FILTER */}
+      {/* SEARCH + FILTER */}
       <div className="controls">
         <input
           type="text"
@@ -138,10 +130,9 @@ const UsersPage = () => {
         </select>
       </div>
 
-      {/* ✅ TABLE */}
+      {/* TABLE */}
       <div className="table-container">
         <table className="users-table">
-
           <thead>
             <tr>
               <th>ID</th>
@@ -149,7 +140,7 @@ const UsersPage = () => {
               <th>Email</th>
               <th>Role</th>
               <th>Status</th>
-              <th>Actions</th>
+              <th className="action-col">Actions</th>
             </tr>
           </thead>
 
@@ -167,12 +158,22 @@ const UsersPage = () => {
                   <td>{user.username}</td>
                   <td>{user.email}</td>
 
+                  {/* ✅ ROLE */}
                   <td>
-                    <span className="role-badge">
+                    <span
+                      className={`role-badge ${
+                        user.role === "ROLE_ADMIN"
+                          ? "role-admin"
+                          : user.role === "ROLE_COMPLIANCE_OFFICER"
+                          ? "role-officer"
+                          : "role-citizen"
+                      }`}
+                    >
                       {user.role.replace("ROLE_", "")}
                     </span>
                   </td>
 
+                  {/* ✅ STATUS */}
                   <td>
                     <span
                       className={`status-badge ${
@@ -187,8 +188,6 @@ const UsersPage = () => {
 
                   {/* ✅ ACTIONS */}
                   <td className="action-cell">
-
-                    {/* ✅ VIEW */}
                     <button
                       className="btn view-btn"
                       onClick={() =>
@@ -198,7 +197,6 @@ const UsersPage = () => {
                       View
                     </button>
 
-                    {/* ✅ EDIT */}
                     <button
                       className="btn edit-btn"
                       onClick={() =>
@@ -208,45 +206,34 @@ const UsersPage = () => {
                       Edit
                     </button>
 
-                    {/* ✅ ROLE BASED */}
                     {user.role === "ROLE_ADMIN" ? (
-                      <button
-                        className="btn lock-btn"
-                        disabled
-                        title="Admin cannot be modified"
-                      >
-                        Protected
+                      <button className="btn lock-btn" disabled>
+                        🔒
                       </button>
                     ) : user.status === "ACTIVE" ? (
                       <button
                         className="btn delete-btn"
-                        onClick={() =>
-                          handleDelete(user.userId)
-                        }
+                        onClick={() => handleDelete(user.userId)}
                       >
                         Deactivate
                       </button>
                     ) : (
                       <button
                         className="btn restore-btn"
-                        onClick={() =>
-                          handleRestore(user.userId)
-                        }
+                        onClick={() => handleRestore(user.userId)}
                       >
                         Restore
                       </button>
                     )}
-
                   </td>
                 </tr>
               ))
             )}
           </tbody>
-
         </table>
       </div>
 
-      {/* ✅ PAGINATION */}
+      {/* PAGINATION */}
       <div className="pagination">
         {Array.from({ length: totalPages }, (_, i) => (
           <button
@@ -258,7 +245,6 @@ const UsersPage = () => {
           </button>
         ))}
       </div>
-
     </div>
   );
 };

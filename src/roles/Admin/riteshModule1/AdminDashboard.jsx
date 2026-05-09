@@ -22,6 +22,7 @@ const AdminDashboard = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
+
         setUsers(res.data);
       } catch (err) {
         toast.error("Failed to load users ❌");
@@ -29,10 +30,11 @@ const AdminDashboard = () => {
         setLoading(false);
       }
     };
+
     fetchUsers();
   }, []);
 
-  // ✅ DELETE HANDLER
+  // ✅ DELETE USER
   const handleDelete = async () => {
     try {
       await axios.delete(
@@ -53,7 +55,7 @@ const AdminDashboard = () => {
       );
 
       toast.success("User deactivated ✅");
-    } catch (err) {
+    } catch {
       toast.error("Operation failed ❌");
     } finally {
       setShowModal(false);
@@ -91,14 +93,14 @@ const AdminDashboard = () => {
         ))}
       </div>
 
-      {/* TABLE */}
+      {/* ✅ TABLE SECTION */}
       <div className="dashboard-section">
         <h3>Users Overview</h3>
 
         {loading ? (
           <p>Loading...</p>
         ) : (
-          <div className="table-container">
+          <div className="table-container"> {/* ✅ IMPORTANT FIX */}
             <table className="users-table">
               <thead>
                 <tr>
@@ -123,31 +125,48 @@ const AdminDashboard = () => {
                       <td>{user.email}</td>
                       <td>{user.phone}</td>
 
+                      {/* ROLE */}
                       <td>
-                        <span className="role-badge">
+                        <span
+                          className={`role-badge ${
+                            user.role === "ROLE_ADMIN"
+                              ? "role-admin"
+                              : user.role ===
+                                "ROLE_COMPLIANCE_OFFICER"
+                              ? "role-officer"
+                              : "role-citizen"
+                          }`}
+                        >
                           {user.role.replace("ROLE_", "")}
                         </span>
                       </td>
 
+                      {/* STATUS */}
                       <td>
                         <span className="status-badge active">
                           {user.status}
                         </span>
                       </td>
 
+                      {/* ✅ ACTIONS FIXED */}
                       <td>
-                        <div className="action-container">
+                        <div className="action-cell">
                           <button
                             className="btn view-btn"
                             onClick={() =>
-                              navigate(`/admin/users/${user.userId}`)
+                              navigate(
+                                `/admin/users/${user.userId}`
+                              )
                             }
                           >
                             View
                           </button>
 
                           {user.role === "ROLE_ADMIN" ? (
-                            <button className="btn lock-btn" disabled>
+                            <button
+                              className="btn lock-btn"
+                              disabled
+                            >
                               🔒
                             </button>
                           ) : (
@@ -173,8 +192,8 @@ const AdminDashboard = () => {
 
       {/* ✅ MODAL */}
       {showModal && (
-        <div className="modal-overlay fade-in">
-          <div className="modal-box scale-in">
+        <div className="modal-overlay">
+          <div className="modal-box">
             <h4>Confirm Action</h4>
             <p>Deactivate this user?</p>
 

@@ -1,7 +1,12 @@
+/* ===============================/* PAGE CONTAINER
+================================= */
 .users-page {
   padding: 20px;
 }
 
+/* ===============================
+   SEARCH + FILTER
+================================= */
 .controls {
   display: flex;
   gap: 15px;
@@ -15,69 +20,157 @@
   border: 1px solid #ccc;
 }
 
-/* TABLE */
+/* ===============================
+   TABLE STRUCTURE
+================================= */
+.table-container {
+  width: 100%;
+  overflow-x: auto;   /* ✅ allows horizontal scroll */
+}
+
+
 .users-table {
   width: 100%;
+  min-width: 950px;
   border-collapse: collapse;
+ 
 }
 
 .users-table th {
   background: #143859;
   color: white;
   padding: 14px;
+  text-align: left;
 }
 
 .users-table td {
   padding: 14px;
   border-bottom: 1px solid #eee;
   vertical-align: middle;
+  word-wrap: break-word; /* ✅ prevents overflow */
 }
 
-/* ✅ SMOOTH HOVER */
-.users-table tr {
-  transition: all 0.2s ease;
+
+.users-table th:nth-child(6) {
+  width: 240px;         /* ✅ reduce actions column width */
 }
 
+
+/* ===============================
+   COLUMN WIDTH FIX
+================================= */
+.users-table th:nth-child(1) { width: 60px; }
+.users-table th:nth-child(2) { width: 150px; }
+.users-table th:nth-child(3) { width: 250px; }
+.users-table th:nth-child(4) { width: 150px; }
+.users-table th:nth-child(5) { width: 120px; }
+.users-table th:nth-child(6) { width: 300px; }
+
+/* ===============================
+   HOVER EFFECT
+================================= */
 .users-table tr:hover {
   background: #f4f8ff;
-  transform: translateY(-1px);
 }
 
-/* EMPTY STATE */
+/* ===============================
+   EMPTY STATE
+================================= */
 .empty-state {
   text-align: center;
   padding: 20px;
   color: #777;
 }
 
-/* BADGES */
+/* ===============================
+   ROLE BADGES
+================================= */
 .role-badge {
-  background: #1e4d8b;
-  color: white;
   padding: 5px 10px;
   border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ADMIN */
+.role-admin {
+  background: #fff3cd;
+  color: #b45309;
+}
+
+/* OFFICER */
+.role-officer {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+/* CITIZEN */
+.role-citizen {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+/* ===============================
+   STATUS BADGES
+================================= */
+.status-badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  display: inline-block;
 }
 
 .status-badge.active {
-  background: green;
+  background: #198754;
   color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
 }
 
 .status-badge.inactive {
-  background: red;
+  background: #dc3545;
   color: white;
-  padding: 5px 10px;
-  border-radius: 20px;
 }
 
-/* BUTTONS */
+/* ===============================
+   ACTION BUTTONS FIX
+================================= */
+.action-cell {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  /* flex-wrap: nowrap;  ✅ prevents breaking */
+}
+
+/* ===============================
+   BUTTON BASE
+================================= */
 .btn {
-  padding: 8px 16px;
-  border-radius: 8px;
+  padding: 4px 8px;
+  border-radius: 6px;
   border: none;
+  font-size: 11px;
   cursor: pointer;
+  min-width: auto;
+  white-space: nowrap; /* ✅ keeps button text intact */
+  transition: 0.2s ease;
+}
+
+/* VIEW */
+.view-btn {
+  background: #29548a;
+  color: white;
+}
+.view-btn:hover {
+  background: #1e3f6b;
+}
+
+/* EDIT */
+.edit-btn {
+  background: #f4b740;
+  color: #143859;
+}
+.edit-btn:hover {
+  background: #e0a52f;
 }
 
 /* DELETE */
@@ -85,28 +178,29 @@
   background: #dc3545;
   color: white;
 }
+.delete-btn:hover {
+  background: #b02a37;
+}
 
 /* RESTORE */
 .restore-btn {
   background: #198754;
   color: white;
 }
+.restore-btn:hover {
+  background: #146c43;
+}
 
 /* LOCK */
 .lock-btn {
   background: #ccc;
-  color: #555;
   cursor: not-allowed;
-  opacity: 0.8;
+  padding: 5px 8px;
 }
 
-.lock-btn:hover{
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-/* ✅ PAGINATION */
+/* ===============================
+   PAGINATION
+================================= */
 .pagination {
   margin-top: 20px;
   display: flex;
@@ -119,7 +213,6 @@
   border: none;
   background: #e9ecef;
   cursor: pointer;
-  transition: 0.2s;
 }
 
 .pagination button:hover {
@@ -131,51 +224,3 @@
   color: white;
 }
 
-/* ✅ FIX ACTION COLUMN SPACING */
-/* ✅ ACTION BUTTON FIX */
-.action-cell {
-  display: flex;
-  gap: 12px;                 /* spacing between buttons */
-  align-items: center;
-  flex-wrap: wrap;           /* prevents cut issue */
-}
-
-/* ✅ BUTTON BASE */
-.action-cell .btn {
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  min-width: 85px;           /* ensures visibility */
-  white-space: nowrap;
-}
-
-/* VIEW */
-.view-btn {
-  background: #29548a;
-  color: white;
-}
-
-/* EDIT */
-.edit-btn {
-  background: #f4b740;
-  color: #143859;
-}
-
-/* DELETE */
-.delete-btn {
-  background: #dc3545;
-  color: white;
-}
-
-/* RESTORE */
-.restore-btn {
-  background: #198754;
-  color: white;
-}
-
-/* LOCK */
-.lock-btn {
-  background: #dee2e6;
-  color: #666;
-  cursor: not-allowed;
-}
