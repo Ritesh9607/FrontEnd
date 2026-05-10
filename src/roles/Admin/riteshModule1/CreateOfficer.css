@@ -128,3 +128,87 @@
   cursor: not-allowed;
   box-shadow: none;
 }
+
+/* ✅ PROGRESS BAR */
+.progress-bar {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  transition: width 0.5s ease;
+}
+
+.progress-fill.weak {
+  background: #ef4444;
+}
+
+.progress-fill.medium {
+  background: #f59e0b;
+}
+
+.progress-fill.strong {
+  background: #22c55e;
+}
+
+.strength-text {
+  font-size: 13px;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+/* ✅ PASSWORD MATCH */
+.confirm-msg {
+  font-size: 13px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.confirm-msg.match {
+  color: #166534;
+}
+
+.confirm-msg.mismatch {
+  color: #991b1b;
+}
+
+/* PASSWORD FIELD WITH ICON */
+.password-wrapper {
+  position: relative;
+}
+
+/* .eye {
+  position: absolute;
+  right: 10px;
+  top: 9px;
+  cursor: pointer;
+} */
+
+/* SUCCESS CARD */
+.success-card {
+  max-width: 420px;
+  margin: 80px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+}
+
+.success-card h2 {
+  color: #22c55e;
+}
+
+.success-card button {
+  margin-top: 15px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}

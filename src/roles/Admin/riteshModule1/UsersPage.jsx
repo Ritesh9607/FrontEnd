@@ -93,42 +93,62 @@ const UsersPage = () => {
           </thead>
 
           <tbody>
-            {currentUsers.map(user => (
-              <tr key={user.userId}>
-                <td>{user.userId}</td>
-                <td>{user.username}</td>
-                <td>{user.email}</td>
+            {currentUsers.map(user => {
+              const isAdmin = user.role === "ROLE_ADMIN";
 
-                <td>
-                  <span className="role-badge">
-                    {user.role.replace("ROLE_", "")}
-                  </span>
-                </td>
+              return (
+                <tr key={user.userId}>
+                  <td>{user.userId}</td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
 
-                <td>
-                  <span
-                    className={`status-badge ${
-                      user.status === "ACTIVE"
-                        ? "active"
-                        : "inactive"
-                    }`}
-                  >
-                    {user.status}
-                  </span>
-                </td>
+                  <td>
+                    <span className="role-badge">
+                      {user.role.replace("ROLE_", "")}
+                    </span>
+                  </td>
 
-                <td className="action-cell">
-                  <button className="btn view-btn">View</button>
-                  <button className="btn edit-btn">Edit</button>
+                  <td>
+                    <span
+                      className={`status-badge ${
+                        user.status === "ACTIVE"
+                          ? "active"
+                          : "inactive"
+                      }`}
+                    >
+                      {user.status}
+                    </span>
+                  </td>
 
-                  {user.status === "ACTIVE" ? (
-                    <button className="btn delete-btn">Deactivate</button>
-                  ) : (
-                    <button className="btn restore-btn">Restore</button>
-                  )}
-                </td>
-              </tr>
-            ))}
+                  <td className="action-cell">
+                    <button className="btn view-btn">View</button>
+                    <button className="btn edit-btn">Edit</button>
+
+                    {/* ✅ ACTIVE USERS */}
+                    {user.status === "ACTIVE" ? (
+                      <button
+                        className={`btn delete-btn ${
+                          isAdmin ? "disabled" : ""
+                        }`}
+                        disabled={isAdmin}
+                      >
+                        Deactivate
+                      </button>
+                    ) : (
+                      /* ✅ INACTIVE USERS */
+                      <button
+                        className={`btn restore-btn ${
+                          isAdmin ? "disabled" : ""
+                        }`}
+                        disabled={isAdmin}
+                      >
+                        Restore
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

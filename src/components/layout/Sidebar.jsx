@@ -41,7 +41,7 @@ export const Sidebar = ({ onToggle, initialState = true }) => {
     {
       title: "SYSTEM",
       items: [
-        { label: "Audit Logs", to: "/admin/audit", icon: ClipboardList },
+        { label: "Audit Logs", to: "/admin/audit-logs", icon: ClipboardList },
         { label: "Settings", to: "/admin/settings", icon: Settings },
       ],
     },
