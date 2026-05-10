@@ -8,10 +8,11 @@ export const Header = ({ isAuthenticated }) => {
 
   const handleAuthAction = () => {
     if (isAuthenticated) {
-      localStorage.removeItem('token'); // Clear token on logout
-      navigate('/'); // Redirect to home after logout
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      window.location.href = "/login";
     } else {
-      navigate('/login'); // Redirect to login page
+      navigate("/login");
     }
   };
 
@@ -27,11 +28,17 @@ export const Header = ({ isAuthenticated }) => {
         </div>
 
         <div className="header-info">
-          <button className="login-btn fw-bold" onClick={handleAuthAction}>
+          <button className="login-btn" onClick={handleAuthAction}>
             {isAuthenticated ? (
-              <><LogOut size={20} className="me-2" /><span>Logout</span></>
+              <>
+                <LogOut size={20} className="me-2" />
+                <span>Logout</span>
+              </>
             ) : (
-              <><LogIn size={20} className="me-2" /><span>Login</span></>
+              <>
+                <LogIn size={20} className="me-2" />
+                <span>Login</span>
+              </>
             )}
           </button>
         </div>
@@ -39,3 +46,5 @@ export const Header = ({ isAuthenticated }) => {
     </header>
   );
 };
+
+export default Header;

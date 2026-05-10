@@ -60,22 +60,14 @@ export const Home = () => {
             <h1 className="display-4 fw-bold mb-4">National Financial <br /><span className="text-primary">Economic Governance</span></h1>
             <p className="lead text-muted mb-5">FinanceGov is a web-based platform designed for finance ministries and regulatory agencies to manage national financial regulation, economic programs, and compliance.</p>
             
-           {/* Updated View Programs Button */}
-<div className="d-block">
-  <button 
-    className="btn btn-warning btn-lg px-4 w-auto d-inline-flex align-items-center fw-bold" 
-    onClick={handleViewPrograms}
-    /* Note: We removed the hardcoded background and shadow here 
-       so the hover effects in Home.css can work! 
-    */
-    style={{ 
-      color: '#000',
-      borderRadius: '8px' 
-    }}
-  >
-    View Programs <ArrowRight size={20} className="ms-2" />
-  </button>
-</div>
+            <div className="d-block">
+              <button 
+                className="btn-hero" 
+                onClick={handleViewPrograms}
+              >
+                View Programs <ArrowRight size={20} className="ms-2" />
+              </button>
+            </div>
           </div>
 
           <div className="col-lg-5">
@@ -121,11 +113,11 @@ export const Home = () => {
             </div>
           </div>
 
-          <div className="row g-4">
+          <div className="row g-4 align-items-start">
             {verticals.map((item, idx) => (
               <div className="col-lg-3 col-md-6" key={idx}>
-                <div className="card h-100 border-0 shadow-sm p-3">
-                  <div className="card-body d-flex flex-column">
+                <div className="card border-0 shadow-sm p-3">
+                  <div className="card-body">
                     <h5 className="fw-bold text-primary mb-3 text-center">{item.title}</h5>
                     <p className="small text-muted mb-3">{item.desc}</p>
                     
@@ -143,7 +135,7 @@ export const Home = () => {
                     </AnimatePresence>
 
                     <button 
-                      className="btn btn-warning btn-sm mt-auto px-4 text-white fw-bold rounded-pill shadow-sm d-flex align-items-center justify-content-center gap-2"
+                      className="btn-read-more"
                       onClick={() => toggleExpand(idx)}
                     >
                       {expandedCard === idx ? "Show Less" : "Read More..."}

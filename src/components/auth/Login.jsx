@@ -22,11 +22,21 @@ const Login = () => {
       const response = await axios.post('http://localhost:9091/api/auth/login', credentials);
 
       if (response.data.token) {
-        localStorage.setItem('token', response.data.token);
-      }
+  localStorage.setItem("token", response.data.token);
 
+  // ✅ ADD THIS
+  localStorage.setItem("role", response.data.role || "ROLE_USER");
+}
+  const role=response.data.role;
       toast.success("Login Successful!");
-      navigate('/');
+      
+if (role === "ROLE_ADMIN") {
+  navigate("/admin/dashboard");
+} else {
+  navigate("/");
+}
+
+     // navigate('/');
 
     } catch (err) {
       toast.error("Invalid credentials");
@@ -95,6 +105,9 @@ const Login = () => {
                   onChange={handleChange}
                 />
               </div>
+              <div className="forgot-password">
+  <Link to="/forgot-password">Forgot Password?</Link>
+</div>
 
               <button type="submit" disabled={isSubmitting}>
                 {isSubmitting ? "Signing in..." : "LOGIN"}

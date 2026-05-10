@@ -1,28 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import Footer from "./Footer";
 import { Outlet } from "react-router-dom";
 
-const Layout = ({ children }) => {
+const Layout = () => {
+
+  // ✅ SIDEBAR STATE
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const isAuthenticated = !!localStorage.getItem("token");
+
+  // ✅ AUTH STATE (FIXED - STABLE)
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  // ✅ LOAD AUTH ONCE (important)
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    setIsAuthenticated(!!token);
+    setIsAdmin(role === "ROLE_ADMIN");
+  }, []);
 
   return (
     <div className="app-container">
 
+      {/* ✅ HEADER */}
       <Header isAuthenticated={isAuthenticated} />
 
       <div className="main-container">
-        
-        {isAuthenticated && (
+
+        {/* ✅ SHOW SIDEBAR ONLY FOR ADMIN */}
+        {isAuthenticated && isAdmin && (
           <Sidebar onToggle={setSidebarOpen} />
         )}
 
+        {/* ✅ CONTENT */}
         <div
           className="content-area"
           style={{
-            marginLeft: isAuthenticated
+            marginLeft: isAuthenticated && isAdmin
               ? sidebarOpen
                 ? "280px"
                 : "80px"
@@ -30,11 +47,12 @@ const Layout = ({ children }) => {
             transition: "all 0.3s ease"
           }}
         >
-          <Outlet /> {/* This will render the matched child route component */}
+          <Outlet />
         </div>
 
       </div>
 
+      {/* ✅ FOOTER */}
       <Footer
         sidebarOpen={sidebarOpen}
         isAuthenticated={isAuthenticated}

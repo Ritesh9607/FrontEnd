@@ -20,7 +20,8 @@ import Analytics from "./roles/Admin/riteshModule1/Analytics";
 import CreateOfficer from "./roles/Admin/riteshModule1/CreateOfficer";
 import AuditLogs from "./roles/Admin/riteshModule1/AuditLogs";
 import Settings from "./roles/Admin/riteshModule1/Settings";
-import ThemeProvider from "./roles/Admin/riteshModule1/ThemeProvider";
+import ForgotPassword from "./components/auth/ForgotPassword";
+
 
 // Layout
 import Layout from "./components/layout/Layout";
@@ -63,6 +64,7 @@ function App() {
           <Route path="admin/create-officer" element={<CreateOfficer />} />
           <Route path="admin/audit-logs" element={<AuditLogs />} />
           <Route path="admin/settings" element={<Settings />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
           
           {/* ✅ ✅ FIXED EDIT ROUTE */}
           <Route path="admin/users/edit/:id" element={<EditUser />} />
